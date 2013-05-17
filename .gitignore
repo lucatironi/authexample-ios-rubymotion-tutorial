@@ -1,5 +1,7 @@
 *.storyboardc
 .repl_history
+vendor/Pods
+vendor/Podfile.lock
 build
 tags
 
