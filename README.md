@@ -20,8 +20,8 @@ Using the same backend we developed in the previous tutorials, I'll guide you th
 - Clone or [download](https://github.com/lucatironi/authexample-ios-rubymotion-tutorial/archive/master.zip) the project
 
 ```ruby
-$ cd authexample-ios-rubymotion-tutorial
-$ gem install bundler
-$ bundle install
-$ rake
+cd authexample-ios-rubymotion-tutorial
+gem install bundler
+bundle install
+rake
 ```
