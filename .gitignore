@@ -1,0 +1,14 @@
+*.storyboardc
+.repl_history
+build
+tags
+
+# common annoyance editors
+.DS_Store
+nbproject
+.redcar
+*.swp
+*.orig
+*.swo
+~
+.eprj
