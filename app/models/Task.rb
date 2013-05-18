@@ -34,6 +34,25 @@ class Task
     end
   end
 
+  def self.create(params = {}, &block)
+    data = BW::JSON.generate(params)
+
+    BW::HTTP.post("#{API_TASKS_ENDPOINT}.json", { headers: Task.headers, payload: data } ) do |response|
+      if response.status_description.nil?
+        App.alert(response.error_message)
+      else
+        if response.ok?
+          json = BW::JSON.parse(response.body.to_str)
+          block.call(json)
+        elsif response.status_code.to_s =~ /40\d/
+          App.alert("Task creation failed")
+        else
+          App.alert(response.to_str)
+        end
+      end
+    end
+  end
+
   def self.headers
     {
       'Content-Type' => 'application/json',

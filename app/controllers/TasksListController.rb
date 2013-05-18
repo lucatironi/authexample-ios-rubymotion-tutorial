@@ -70,6 +70,14 @@ class TasksListController < UIViewController
     end
   end
 
+  def addNewTask
+    @newTaskController = NewTaskController.alloc.init
+    @newTaskNavigationController = UINavigationController.alloc.init
+    @newTaskNavigationController.pushViewController(@newTaskController, animated:false)
+
+    self.presentModalViewController(@newTaskNavigationController, animated:true)
+  end
+
   def logout
     UIApplication.sharedApplication.delegate.logout
   end
