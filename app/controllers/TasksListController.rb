@@ -22,7 +22,11 @@ class TasksListController < UIViewController
     refreshButton = UIBarButtonItem.alloc.initWithBarButtonSystemItem(UIBarButtonSystemItemRefresh,
                                                                       target:self,
                                                                       action:'refresh')
-    self.navigationItem.rightBarButtonItems = [refreshButton]
+    newTaskButton = UIBarButtonItem.alloc.initWithBarButtonSystemItem(UIBarButtonSystemItemAdd,
+                                                                      target:self,
+                                                                      action:'addNewTask')
+    self.navigationItem.rightBarButtonItems = [refreshButton, newTaskButton]
+
 
     @tasksTableView = UITableView.alloc.initWithFrame([[0, 0],
                                                       [self.view.bounds.size.width, self.view.bounds.size.height]],
