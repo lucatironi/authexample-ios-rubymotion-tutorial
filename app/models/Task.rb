@@ -53,6 +53,26 @@ class Task
     end
   end
 
+  def toggle_completed(&block)
+    url = "#{API_TASKS_ENDPOINT}/#{self.id}/#{self.completed ? 'open' : 'complete'}.json"
+    BW::HTTP.put(url, { headers: Task.headers }) do |response|
+      if response.status_description.nil?
+        App.alert(response.error_message)
+      else
+        if response.ok?
+          json = BW::JSON.parse(response.body.to_str)
+          taskData = json[:data][:task]
+          task = Task.new(taskData)
+          block.call(task)
+        elsif response.status_code.to_s =~ /40\d/
+          App.alert("Not authorized")
+        else
+          App.alert("Something went wrong")
+        end
+      end
+    end
+  end
+
   def self.headers
     {
       'Content-Type' => 'application/json',

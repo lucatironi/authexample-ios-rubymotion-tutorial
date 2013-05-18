@@ -56,7 +56,24 @@ class TasksListController < UIViewController
 
     cell.textLabel.text = task.title
 
+    if task.completed
+      cell.textLabel.color = '#aaaaaa'.to_color
+      cell.accessoryType = UITableViewCellAccessoryCheckmark
+    else
+      cell.textLabel.color = '#222222'.to_color
+      cell.accessoryType = UITableViewCellAccessoryNone
+    end
+
     cell
+  end
+
+  def tableView(tableView, didSelectRowAtIndexPath:indexPath)
+    tableView.deselectRowAtIndexPath(indexPath, animated:true)
+    task = self.tasks[indexPath.row]
+
+    task.toggle_completed do
+      refresh
+    end
   end
 
   # Controller methods
