@@ -55,10 +55,12 @@ class LoginController < Formotion::FormController
           App.alert(json['info'])
           self.navigationController.dismissModalViewControllerAnimated(true)
           TasksListController.controller.refresh
-        elsif response.status_code.to_s =~ /40\d/
+        elsif response.status_code.to_s =~ /4\d\d/
           App.alert("Login failed")
+        elsif response.status_code.to_s =~ /5\d\d/
+          App.alert("Server error: please try again")
         else
-          App.alert(response.to_str)
+          App.alert("Something went wrong")
         end
       end
       SVProgressHUD.dismiss

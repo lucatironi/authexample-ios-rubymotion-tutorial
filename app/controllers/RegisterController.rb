@@ -60,10 +60,10 @@ class RegisterController < Formotion::FormController
                                  password_confirmation: form.render[:password_confirmation]
                                 } })
 
-    if form.render[:email].nil? ||
-       form.render[:name].nil? ||
-       form.render[:password].nil? ||
-       form.render[:password_confirmation].nil?
+    if form.render[:email] == '' ||
+       form.render[:name] == '' ||
+       form.render[:password] == '' ||
+       form.render[:password_confirmation] == ''
       App.alert("Please complete all the fields")
     else
       if form.render[:password] != form.render[:password_confirmation]
@@ -80,10 +80,15 @@ class RegisterController < Formotion::FormController
               App.alert(json['info'])
               self.navigationController.dismissModalViewControllerAnimated(true)
               TasksListController.controller.refresh
-            elsif response.status_code.to_s =~ /40\d/
-              App.alert("Registration failed")
+            elsif response.status_code.to_s =~ /4\d\d/
+              json = BW::JSON.parse(response.body.to_s)
+              errors = ""
+              json['info'].each { |msg| errors << "\n" + msg }
+              App.alert("Registration failed:#{errors}")
+            elsif response.status_code.to_s =~ /5\d\d/
+              App.alert("Server error: please try again")
             else
-              App.alert(response.to_str)
+              App.alert("Something went wrong")
             end
           end
           SVProgressHUD.dismiss
